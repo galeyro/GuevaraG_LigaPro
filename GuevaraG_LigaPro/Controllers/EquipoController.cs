@@ -1,4 +1,5 @@
 ﻿using GuevaraG_LigaPro.Models;
+using GuevaraG_LigaPro.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GuevaraG_LigaPro.Controllers
@@ -7,31 +8,8 @@ namespace GuevaraG_LigaPro.Controllers
     {
         public IActionResult List()
         {
-            List<Equipo> equipos = new List<Equipo>();
-            Equipo ldu = new Equipo
-            {
-                Id = 1,
-                Nombre = "LDU",
-                PartidosJugados = 10,
-                PartidosGanados = 10,
-                PartidosEmpatados = 0,
-                PartidosPerdidos = 0,
-                TotalPuntos = 30
-            };
-
-            Equipo bcs = new Equipo
-            {
-                Id = 2,
-                Nombre = "BCS",
-                PartidosJugados = 10,
-                PartidosGanados = 1,
-                PartidosEmpatados = 0,
-                PartidosPerdidos = 9,
-                TotalPuntos = 3
-            };
-
-            equipos.Add(ldu);
-            equipos.Add(bcs);
+            EquipoRepository repositorio = new EquipoRepository();
+            var equipos = repositorio.DevuelveListadoEquipos();
 
             return View(equipos);
         }

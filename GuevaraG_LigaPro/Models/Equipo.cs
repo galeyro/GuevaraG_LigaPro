@@ -18,6 +18,7 @@ namespace GuevaraG_LigaPro.Models
         [Range(0, 20)]
         public int PartidosPerdidos { get; set; }
         public int TotalPuntos { get; set; }
+        public int Posicion { get; set; }
 
         //Metodo para calcular los puntos
         public void CalcularPuntos()

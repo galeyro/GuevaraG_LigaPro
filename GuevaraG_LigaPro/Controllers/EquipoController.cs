@@ -11,7 +11,15 @@ namespace GuevaraG_LigaPro.Controllers
         {
             EquipoRepository repositorio = new EquipoRepository();
             var equipos = repositorio.DevuelveListadoEquipos()
-                                      .OrderByDescending(e => e.TotalPuntos);
+                                      .OrderByDescending(e => e.TotalPuntos)
+                                      .ToList();
+
+            // Calcular la posición de cada equipo
+            for (int i = 0; i < equipos.Count; i++)
+            {
+                equipos[i].Posicion = i + 1; // La posición comienza en 1
+            }
+
             return View(equipos);
         }
 

@@ -1,13 +1,10 @@
 ﻿@model IEnumerable<GuevaraG_LigaPro.Models.Equipo>
 
-<p>
-    <a class ="btn btn-success" asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Posicion
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -34,7 +31,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @item.Posicion
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)

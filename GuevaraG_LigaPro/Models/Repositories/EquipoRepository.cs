@@ -15,8 +15,9 @@ namespace GuevaraG_LigaPro.Models.Repositories
                 PartidosGanados = 10,
                 PartidosEmpatados = 0,
                 PartidosPerdidos = 0,
-                TotalPuntos = 30
+               
             };
+            ldu.CalcularPuntos();
 
             Equipo bcs = new Equipo
             {

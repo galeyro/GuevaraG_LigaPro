@@ -56,9 +56,9 @@
             </td>
             <td>
                 <div class="btn-group" role="group">
-                    @Html.ActionLink("Edit", "Edit", new { }, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Details", "Details", new { }, new { @class = "btn btn-info" })
-                    @Html.ActionLink("Delete", "Delete", new { }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Editar", "Edit", new {  }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Información del equipo", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Borrar", "Delete", new { }, new { @class = "btn btn-danger" })
                 </div>
             </td>
 

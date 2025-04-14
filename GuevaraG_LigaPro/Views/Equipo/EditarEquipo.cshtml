@@ -5,12 +5,13 @@
 }
 
 <h2>Editar Equipo</h2>
-<!-- asp-for vincula cada campo del formulario con una propiedad del modelo Equipo -->
-<form asp-action="EditarEquipo">  
+
+<form id="editarEquipoForm" asp-action="EditarEquipo">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <div class="form-group">
         <label asp-for="Id" class="control-label"></label>
         <input asp-for="Id" class="form-control" readonly />
-        <!-- readondly identifica campos no editables, no puede modificar el usuario -->
     </div>
     <div class="form-group">
         <label asp-for="Nombre" class="control-label"></label>
@@ -18,33 +19,56 @@
     </div>
     <div class="form-group">
         <label asp-for="PartidosJugados" class="control-label"></label>
-        <input asp-for="PartidosJugados" class="form-control" />
+        <input asp-for="PartidosJugados" class="form-control" id="partidosJugados" />
+        <span asp-validation-for="PartidosJugados" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="PartidosGanados" class="control-label"></label>
-        <input asp-for="PartidosGanados" class="form-control" />
+        <input asp-for="PartidosGanados" class="form-control" id="partidosGanados" />
+        <span asp-validation-for="PartidosGanados" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="PartidosEmpatados" class="control-label"></label>
-        <input asp-for="PartidosEmpatados" class="form-control" />
+        <input asp-for="PartidosEmpatados" class="form-control" id="partidosEmpatados" />
+        <span asp-validation-for="PartidosEmpatados" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="PartidosPerdidos" class="control-label"></label>
-        <input asp-for="PartidosPerdidos" class="form-control" />
+        <input asp-for="PartidosPerdidos" class="form-control" id="partidosPerdidos" />
+        <span asp-validation-for="PartidosPerdidos" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="TotalPuntos" class="control-label"></label>
         <input asp-for="TotalPuntos" class="form-control" readonly />
     </div>
     <div class="form-group">
-        <!-- Botones guardar envia el formulario para guardar los cambios -->
-        <!-- Cancelar redirige al usuario de vuelta a la lista de equipos sin guardar los cambios-->
         <input type="submit" value="Guardar" class="btn btn-primary" />
         <a asp-action="List" class="btn btn-secondary">Cancelar</a>
     </div>
 </form>
 
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById("editarEquipoForm").addEventListener("submit", function (event) {
+            // Obtener los valores de los campos
+            const partidosJugados = parseInt(document.getElementById("partidosJugados").value) || 0;
+            const partidosGanados = parseInt(document.getElementById("partidosGanados").value) || 0;
+            const partidosEmpatados = parseInt(document.getElementById("partidosEmpatados").value) || 0;
+            const partidosPerdidos = parseInt(document.getElementById("partidosPerdidos").value) || 0;
+
+            // Validar que la suma de ganados, empatados y perdidos sea igual a jugados
+            if (partidosGanados + partidosEmpatados + partidosPerdidos !== partidosJugados) {
+                // Mostrar un pop-up con el mensaje de error
+                alert("La suma de partidos ganados, empatados y perdidos debe ser igual a los partidos jugados.");
+
+                // Prevenir el envío del formulario
+                event.preventDefault();
+            }
+        });
+    </script>
 }
+

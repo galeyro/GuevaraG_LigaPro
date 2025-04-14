@@ -10,10 +10,11 @@ namespace GuevaraG_LigaPro.Controllers
         public IActionResult List()
         {
             EquipoRepository repositorio = new EquipoRepository();
-            var equipos = repositorio.DevuelveListadoEquipos();
-
+            var equipos = repositorio.DevuelveListadoEquipos()
+                                      .OrderByDescending(e => e.TotalPuntos);
             return View(equipos);
         }
+
 
         // Acción para mostrar los detalles de un equipo
         public IActionResult Details(int id)
@@ -45,31 +46,22 @@ namespace GuevaraG_LigaPro.Controllers
             return View(equipo);
         }
 
-        [HttpPost] //Acción del controlador para ejecutar en solicitud HTTP tipo POST
+        [HttpPost]
         public IActionResult EditarEquipo(Equipo equipo)
         {
-            if (ModelState.IsValid) //Valida si cumple con las reglas del modelo
+            if (ModelState.IsValid)
             {
-                // Aquí puedes actualizar los datos en el repositorio o base de datos
                 EquipoRepository repositorio = new EquipoRepository();
-                var equipos = repositorio.DevuelveListadoEquipos().ToList();
-                var equipoExistente = equipos.FirstOrDefault(e => e.Id == equipo.Id);
+                repositorio.ActualizarEquipo(equipo); // Actualiza el equipo en la lista estática
 
-                if (equipoExistente != null)
-                {
-                    equipoExistente.PartidosJugados = equipo.PartidosJugados;
-                    equipoExistente.PartidosGanados = equipo.PartidosGanados;
-                    equipoExistente.PartidosEmpatados = equipo.PartidosEmpatados;
-                    equipoExistente.PartidosPerdidos = equipo.PartidosPerdidos;
-                    equipoExistente.CalcularPuntos(); // Recalcular los puntos
-                }
-                //Al guardar cambios, redirige al usuario de vuelta a la lista de equipos
-                return RedirectToAction("List");
+                return RedirectToAction("List"); // Redirige a la lista de equipos
             }
-            
-            //Si los datos no son válidos, volver a mostrar la vista edición
-            return View(equipo);
+
+            return View(equipo); // Si hay errores, vuelve a mostrar la vista de edición
         }
+
+
+
 
     }
 }

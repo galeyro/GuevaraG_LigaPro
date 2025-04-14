@@ -24,5 +24,17 @@ namespace GuevaraG_LigaPro.Models
         {
             TotalPuntos = (PartidosGanados * 3) + PartidosEmpatados;
         }
+
+        //Validacion Partidos Jugados = Ganados + Empatados + Perdidos
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (PartidosGanados + PartidosEmpatados + PartidosPerdidos != PartidosJugados)
+            {
+                yield return new ValidationResult(
+                    "La suma de partidos ganados, empatados y perdidos debe ser igual a los partidos jugados.",
+                    new[] { nameof(PartidosJugados), nameof(PartidosGanados), nameof(PartidosEmpatados), nameof(PartidosPerdidos) }
+                );
+            }
+        }
     }
 }
